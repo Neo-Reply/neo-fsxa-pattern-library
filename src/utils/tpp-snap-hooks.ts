@@ -4,8 +4,6 @@ import {
   DEFAULT_CAAS_EVENT_TIMEOUT_IN_MS,
 } from "./caas-events";
 
-const CAAS_CHANGE_DELAY_IN_MS = 300;
-
 export const CUSTOM_TPP_UPDATE_EVENT = "tpp-update";
 
 export type RegisterTppHooksOptions = {
@@ -37,18 +35,27 @@ export const registerTppHooks = async ({
 
     console.debug("Registering FSXA TPP hooks");
 
+    const waitForEventOrTimeout = async (
+      previewId?: string | null,
+      timeout?: number,
+    ) => {
+      await caasEvents.waitFor(
+        previewId ?? (await TPP_SNAP.getPreviewElement()),
+        {
+          timeout: timeout ?? DEFAULT_CAAS_EVENT_TIMEOUT_IN_MS,
+        },
+      );
+    };
+
     // https://docs.e-spirit.com/tpp/snap/index.html#tpp_snaponrequestpreviewelement
     TPP_SNAP.onRequestPreviewElement(async (previewId: string) => {
       console.debug("onRequestPreviewElement triggered", previewId);
-      await caasEvents.waitFor(previewId, {
-        timeout: DEFAULT_CAAS_EVENT_TIMEOUT_IN_MS,
-      });
       await routeToPreviewId(previewId);
     });
 
     // https://docs.e-spirit.com/tpp/snap/index.html#tpp_snaponcontentchange
     TPP_SNAP.onContentChange(
-      ($node: HTMLElement, previewId: string, content: unknown) => {
+      async ($node: HTMLElement, previewId: string, content: unknown) => {
         console.debug("onContentChange triggered", {
           $node,
           previewId,
@@ -62,6 +69,9 @@ export const registerTppHooks = async ({
           forceUpdateStore(); // the force update is used to remove rendered menu items
           return false;
         } else if ($node) {
+          // Content has been changed --> Wait for CaaS
+          await waitForEventOrTimeout(previewId);
+
           const canceled = !$node.dispatchEvent(
             new CustomEvent(CUSTOM_TPP_UPDATE_EVENT, {
               bubbles: true,
@@ -76,22 +86,11 @@ export const registerTppHooks = async ({
     );
 
     // https://docs.e-spirit.com/tpp/snap/index.html#tpp_snaponrerenderview
-    TPP_SNAP.onRerenderView(() => {
+    TPP_SNAP.onRerenderView(async () => {
       console.debug("onRerenderView triggered");
-      TPP_SNAP.getPreviewElement().then(async (previewId: string) => {
-        if (caasEvents.isConnected()) {
-          await caasEvents.waitFor(previewId, {
-            timeout: DEFAULT_CAAS_EVENT_TIMEOUT_IN_MS,
-            allowedEventTypes: ["replace"],
-          });
-        } else {
-          // no realtime events, so just wait
-          await new Promise(resolve =>
-            setTimeout(resolve, CAAS_CHANGE_DELAY_IN_MS),
-          );
-        }
-        await forceUpdateStore();
-      });
+      // Wait, because we want to make sure any changed that led to rerender are available in CaaS / Navservice
+      await waitForEventOrTimeout();
+      await forceUpdateStore();
       return false;
     });
 
@@ -100,25 +99,18 @@ export const registerTppHooks = async ({
       console.debug("onNavigationChange triggered", {
         newPagePreviewId,
       });
+      // Wait before routing or refetch. Creating the page seems to take longer than other CaaS/Nav Calls -> increased Timeout
+      await waitForEventOrTimeout(
+        newPagePreviewId ?? (await TPP_SNAP.getPreviewElement()),
+        4500,
+      );
+
       if (newPagePreviewId) {
+        // new page created. We need to Update our Navigation and route to it afterwards
+        await forceUpdateStore();
         await routeToPreviewId(newPagePreviewId);
       } else {
-        // if non previewId (for a just created page) is set, refresh the current page
-        await TPP_SNAP.getPreviewElement().then(
-          async (currentPreviewId: string) => {
-            // rendered navigations may change, wait for it
-            if (caasEvents.isConnected()) {
-              await caasEvents.waitFor(currentPreviewId, {
-                timeout: DEFAULT_CAAS_EVENT_TIMEOUT_IN_MS,
-              });
-            } else {
-              // no realtime events, so just wait
-              await new Promise(resolve =>
-                setTimeout(resolve, CAAS_CHANGE_DELAY_IN_MS),
-              );
-            }
-          },
-        );
+        // navigation has been changed --> reinit App
         await forceUpdateStore();
       }
     });
