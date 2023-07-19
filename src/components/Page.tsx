@@ -72,7 +72,8 @@ class Page extends BaseComponent<PageProps> {
   }
 
   async fetchPage(forceRerender = false) {
-    if (this.pageData && !forceRerender) return;
+    // if pageData was passed as prop, we cannot refetch. Parent must do that
+    if (this.pageData) return;
     if (!this.id) {
       throw new Error(
         "You either have to pass already loaded pageData or the id of the page that should be loaded.",
