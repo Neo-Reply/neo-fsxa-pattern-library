@@ -1,3 +1,10 @@
+## [8.21.1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.0...v8.21.1) (2023-08-14)
+
+
+### Bug Fixes
+
+* **layout:** avoid forced remounts ([b973d69](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/b973d69c7e88f4c06b47e7b97a0e4aa2762ddc44))
+
 # [8.21.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.20.0...v8.21.0) (2023-07-17)
 
 
