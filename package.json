@@ -1,6 +1,6 @@
 {
   "name": "@neo-reply/fsxa-pattern-library",
-  "version": "8.21.1",
+  "version": "8.21.0",
   "author": {
     "name": "Neo Reply",
     "email": "neo@reply.de"
@@ -29,6 +29,7 @@
     "README.md"
   ],
   "dependencies": {
+    "fsxa-api": "^10.16.0",
     "prismjs": "^1.27.0",
     "setimmediate": "^1.0.5",
     "vue": "^2.6.14",
@@ -74,11 +75,7 @@
     "semantic-release": "^19.0.3",
     "tailwindcss": "^1.9.6",
     "typescript": "^3.9.10",
-    "vue-template-compiler": "^2.6.14",
-    "fsxa-api": "^10.16.0"
-  },
-  "peerDependencies": {
-    "fsxa-api": "^10.16.0"
+    "vue-template-compiler": "^2.6.14"
   },
   "commitlint": {
     "extends": [
