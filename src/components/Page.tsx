@@ -5,9 +5,8 @@ import BaseComponent from "@/components/base/BaseComponent";
 import { FSXA_INJECT_KEY_LOADER } from "@/constants";
 
 import Layout from "./Layout";
-import { getTPPSnap } from "@/utils";
+import { getTPPSnap, isClient } from "@/utils";
 import { FSXAAppState } from "@/store";
-import { CUSTOM_TPP_UPDATE_EVENT } from "@/utils/tpp-snap-hooks";
 
 export interface PageProps {
   id?: string;
@@ -21,8 +20,6 @@ class Page extends BaseComponent<PageProps> {
   @Prop({ required: false }) id: PageProps["id"];
   @Prop({ required: false }) pageData: PageProps["pageData"];
 
-  key = "fsxa_page_" + 0;
-
   removeTppUpdateListener?: () => void;
 
   serverPrefetch() {
@@ -32,47 +29,40 @@ class Page extends BaseComponent<PageProps> {
   @Watch("id")
   handleIdChange(id: string, prevId: string) {
     if (id !== prevId && id != null) {
-      this.fetchPage(true);
+      this.fetchPage();
     }
-  }
-
-  createTppUpdateHandler() {
-    const onTppUpdateHandler = (event: any) => {
-      if (event.detail?.content?.fsType === "Dataset") {
-        // changing a dataset could be very complex, so better rerender the view
-        // achive this by not preventDefault this event
-        return;
-      }
-
-      if (!event.defaultPrevented) {
-        event.preventDefault();
-        // Force Update of Data, since Backend data might have been changed
-        this.fetchPage(true);
-      }
-    };
-    document.body.addEventListener(CUSTOM_TPP_UPDATE_EVENT, onTppUpdateHandler);
-    this.removeTppUpdateListener = () =>
-      document.body.removeEventListener(
-        CUSTOM_TPP_UPDATE_EVENT,
-        onTppUpdateHandler,
-      );
   }
 
   mounted() {
     if (!this.pageData && !this.loadedPage) {
       this.fetchPage();
     }
-    if (this.isEditMode) {
-      this.createTppUpdateHandler();
-    }
-  }
 
+    const onTppUpdateHandler = (event: any) => {
+      try {
+        if (event.detail.content.fsType === "Dataset") {
+          // changing a dataset could be very complex, so better rerender the view
+          // achive this by not preventDefault this event
+          return;
+        }
+      } catch (ignore) {
+        // the event detail may not have content or a fsType
+      }
+
+      if (!event.defaultPrevented) {
+        event.preventDefault();
+        this.fetchPage();
+      }
+    };
+    document.body.addEventListener("tpp-update", onTppUpdateHandler);
+    this.removeTppUpdateListener = () =>
+      document.body.removeEventListener("tpp-update", onTppUpdateHandler);
+  }
   beforeDestroy() {
     this.removeTppUpdateListener?.();
   }
 
-  async fetchPage(forceRerender = false) {
-    // if pageData was passed as prop, we cannot refetch. Parent must do that
+  async fetchPage() {
     if (this.pageData) return;
     if (!this.id) {
       throw new Error(
@@ -85,14 +75,16 @@ class Page extends BaseComponent<PageProps> {
         locale: this.locale,
       });
       this.setStoredItem(this.id, page);
-      this.setTppPreviewElement();
-      if (forceRerender) this.key = "fsxa_page_" + Date.now();
     } catch (err) {
       this.setStoredItem(this.id, null);
     }
   }
 
+  // ✨ use [key] to re-render on store changes {@see https://michaelnthiessen.com/force-re-render/}
+  key = Date.now();
+
   get loadedPage(): APIPage | null | undefined {
+    this.key = Date.now(); // update the [key] any time the store item gets updated
     return this.id ? this.getStoredItem(this.id) : undefined;
   }
 
@@ -100,8 +92,19 @@ class Page extends BaseComponent<PageProps> {
     return this.pageData || this.loadedPage;
   }
 
-  setTppPreviewElement() {
-    if (this.isEditMode) {
+  render() {
+    if (
+      typeof this.page === "undefined" ||
+      this.$store.state.fsxa.appState !== FSXAAppState.ready
+    ) {
+      const LoaderComponent = this.loaderComponent || "div";
+      return <LoaderComponent />;
+    }
+    if (this.page === null) {
+      throw new Error("Could not load page");
+    }
+
+    if (this.isEditMode && isClient()) {
       const TPP_SNAP = getTPPSnap();
       if (TPP_SNAP) {
         TPP_SNAP.isConnected
@@ -116,25 +119,6 @@ class Page extends BaseComponent<PageProps> {
             console.error("Could not set preview element: " + e);
           });
       }
-    }
-  }
-
-  updated() {
-    this.setTppPreviewElement();
-  }
-
-  render() {
-    if (
-      typeof this.page === "undefined" ||
-      this.$store.state.fsxa.appState !== FSXAAppState.ready
-    ) {
-      const LoaderComponent = this.loaderComponent || "div";
-      return <LoaderComponent />;
-    }
-    if (!this.page) {
-      console.error(`Page not found for id: ${this.id}`);
-      const LoaderComponent = this.loaderComponent || "div";
-      return <LoaderComponent />;
     }
 
     return (
