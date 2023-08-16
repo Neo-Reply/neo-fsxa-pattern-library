@@ -1,3 +1,15 @@
+## [8.21.2](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.1...v8.21.2) (2023-08-16)
+
+
+### Bug Fixes
+
+* **page:** fix forced remounts on client side app render ([#3](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/3)) ([05c5108](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/05c51087ef5dffde8f39f0accc86425517a4c5c4))
+
+
+### Reverts
+
+* Revert "fix(layout): avoid forced remounts" ([fd3e0f8](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/fd3e0f8f196452ff44bde9947b1929d9a7758813))
+
 ## [8.21.1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.0...v8.21.1) (2023-08-14)
 
 
