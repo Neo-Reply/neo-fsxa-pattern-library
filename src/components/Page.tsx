@@ -12,6 +12,7 @@ export interface PageProps {
   id?: string;
   pageData?: APIPage;
 }
+
 @Component({
   name: "FSXAPage",
 })
@@ -31,6 +32,16 @@ class Page extends BaseComponent<PageProps> {
     if (id !== prevId && id != null) {
       this.fetchPage();
     }
+  }
+
+  // use [key] to force re-render if needed.
+  // Load initial Value from Store if available, so that ServerRendered and Client Key are synced
+  get key(): string {
+    return this.$store.state.pageComponentKey || "fsxa_page_" + 1;
+  }
+
+  set key(value: string) {
+    this.$store.state.pageComponentKey = value;
   }
 
   mounted() {
@@ -75,16 +86,14 @@ class Page extends BaseComponent<PageProps> {
         locale: this.locale,
       });
       this.setStoredItem(this.id, page);
+      // Update key in store, so that it may be loaded from client after ssr
+      this.key = "fsxa_page_" + Date.now();
     } catch (err) {
       this.setStoredItem(this.id, null);
     }
   }
 
-  // ✨ use [key] to re-render on store changes {@see https://michaelnthiessen.com/force-re-render/}
-  key = Date.now();
-
   get loadedPage(): APIPage | null | undefined {
-    this.key = Date.now(); // update the [key] any time the store item gets updated
     return this.id ? this.getStoredItem(this.id) : undefined;
   }
 
