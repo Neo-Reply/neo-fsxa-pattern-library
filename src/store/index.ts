@@ -32,6 +32,7 @@ export interface FSXAVuexState {
   navigation: NavigationData | null;
   settings: ProjectProperties | null;
   error: FSXAAppError | null;
+  pageComponentKey: string | null;
   stored: {
     [key: string]: {
       ttl: number;
@@ -104,6 +105,7 @@ export function getFSXAModule<R extends RootState>(
       settings: null,
       appState: FSXAAppState.not_initialized,
       error: null,
+      pageComponentKey: null,
       fsxaApiMode: options.mode,
       mode: options.config.contentMode,
       configuration: options.config,
