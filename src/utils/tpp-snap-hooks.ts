@@ -6,8 +6,6 @@ import {
 
 const CAAS_CHANGE_DELAY_IN_MS = 300;
 
-export const CUSTOM_TPP_UPDATE_EVENT = "tpp-update";
-
 export type RegisterTppHooksOptions = {
   fsxaApi: FSXAApi;
   TPP_SNAP: any;
@@ -63,7 +61,7 @@ export const registerTppHooks = async ({
           return false;
         } else if ($node) {
           const canceled = !$node.dispatchEvent(
-            new CustomEvent(CUSTOM_TPP_UPDATE_EVENT, {
+            new CustomEvent("tpp-update", {
               bubbles: true,
               cancelable: true,
               detail: { previewId, content },
