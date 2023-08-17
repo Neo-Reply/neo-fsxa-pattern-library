@@ -1,3 +1,10 @@
+## [8.21.3](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.2...v8.21.3) (2023-08-17)
+
+
+### Bug Fixes
+
+* **page:** fix usage of store for component key ([#5](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/5)) ([d9cd7ac](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/d9cd7ac361e228ad6dc731060df34b3d84e2b0c0))
+
 ## [8.21.2](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.1...v8.21.2) (2023-08-16)
 
 
