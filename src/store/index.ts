@@ -71,6 +71,14 @@ export const FSXAActions = {
   setNavigation: `${prefix}/${Actions.setNavigation}`,
 };
 
+const Mutations = {
+  setPageComponentKey: "setPageComponentKey",
+} as const;
+
+export const FSXAMutations = {
+  setPageComponentKey: `${prefix}/${Mutations.setPageComponentKey}`,
+};
+
 const GETTER_NAVIGATION_DATA = "navigationData";
 const GETTER_CONFIGURATION = "configuration";
 const GETTER_LOCALE = "locale";
@@ -126,6 +134,9 @@ export function getFSXAModule<R extends RootState>(
       },
     },
     mutations: {
+      [Mutations.setPageComponentKey]: function(state, key: string) {
+        Vue.set(state, "pageComponentKey", key);
+      },
       setNavigation(state, payload: NavigationData) {
         state.navigation = payload;
       },

@@ -6,7 +6,7 @@ import { FSXA_INJECT_KEY_LOADER } from "@/constants";
 
 import Layout from "./Layout";
 import { getTPPSnap, isClient } from "@/utils";
-import { FSXAAppState } from "@/store";
+import { FSXAAppState, FSXAMutations } from "@/store";
 
 export interface PageProps {
   id?: string;
@@ -37,11 +37,11 @@ class Page extends BaseComponent<PageProps> {
   // use [key] to force re-render if needed.
   // Load initial Value from Store if available, so that ServerRendered and Client Key are synced
   get key(): string {
-    return this.$store.state.pageComponentKey || "fsxa_page_" + 1;
+    return this.$store.state.fsxa.pageComponentKey || "fsxa_page_" + 1;
   }
 
   set key(value: string) {
-    this.$store.state.pageComponentKey = value;
+    this.$store.commit(FSXAMutations.setPageComponentKey, value);
   }
 
   mounted() {
