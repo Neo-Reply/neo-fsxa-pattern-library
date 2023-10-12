@@ -30,6 +30,7 @@ class RenderUtils<
             type={content.sectionType}
             meta={{
               previewId: content.previewId,
+              lifespan: content.lifespan,
             }}
             data={content.data}
             id={content.id}
