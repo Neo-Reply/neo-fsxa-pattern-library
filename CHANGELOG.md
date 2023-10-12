@@ -1,3 +1,15 @@
+# [9.0.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.3...v9.0.0) (2023-10-12)
+
+
+### Build System
+
+* **fsxa-api:** move fsxa-api to peer dependency ([#6](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/6)) ([824b4a7](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/824b4a78d46608b29b866a614c49cb4903fb562f))
+
+
+### BREAKING CHANGES
+
+* **fsxa-api:** fsxa-api dependency moved to peer & dev dependencies
+
 ## [8.21.3](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.2...v8.21.3) (2023-08-17)
 
 
