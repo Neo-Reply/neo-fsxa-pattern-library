@@ -1,3 +1,10 @@
+# [9.1.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.0.0...v9.1.0) (2023-10-13)
+
+
+### Features
+
+* **lifespan:** add lifespan of a section to its meta data ([#8](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/8)) ([d9e956a](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/d9e956a49891829ef2b500735bf0af9bbd03d075))
+
 # [9.0.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v8.21.3...v9.0.0) (2023-10-12)
 
 
