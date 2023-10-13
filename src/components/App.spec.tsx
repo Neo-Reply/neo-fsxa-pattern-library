@@ -12,6 +12,7 @@ import { getMockNavigationData } from "../../testing/getMockNavigationData";
 import { VueConstructor } from "vue";
 import { initializeApi } from "@/utils";
 import { CreateStoreProxyOptions } from "@/types/fsxa-pattern-library";
+import { InitializeAppPayload } from "@/store/actions/initializeApp";
 
 const API_URL = "http://fsxa.local";
 
@@ -61,11 +62,18 @@ describe("App", () => {
 
     renderApp({ store, localVue });
 
-    expect(store.dispatch).toHaveBeenCalledWith(FSXAActions.initializeApp, {
+    const payload: InitializeAppPayload = {
       locale: "de",
       initialPath: "/some/path",
       useExactDatasetRouting: false,
-    });
+      remoteDatasetProjectId: undefined,
+      remoteDatasetPageRefMapping: undefined,
+    };
+
+    expect(store.dispatch).toHaveBeenCalledWith(
+      FSXAActions.initializeApp,
+      payload,
+    );
   });
   it("fetches navigation data", async () => {
     const { store, localVue } = setup();

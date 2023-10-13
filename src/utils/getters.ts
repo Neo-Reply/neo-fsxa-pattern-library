@@ -78,8 +78,10 @@ export async function triggerRouteChange(
   $fsxaApi: FSXAApi,
   params: TriggerRouteChangeParams,
   currentLocale: string,
-  globalSettingsKey?: string,
-  useExactDatasetRouting?: boolean,
+  globalSettingsKey: string | undefined,
+  useExactDatasetRouting: boolean | undefined,
+  getRemoteDatasetProjectId: string | undefined,
+  getRemoteDatasetPageRefMapping: Record<string, string> | undefined,
 ): Promise<string | null> {
   console.debug("triggerRouteChange", { currentLocale, params });
   const navigationData: NavigationData =
@@ -88,7 +90,12 @@ export async function triggerRouteChange(
   if (!params.locale || params.locale === currentLocale) {
     if (params.route) {
       if (useExactDatasetRouting) {
-        const dataset = await fetchDatasetByRoute($fsxaApi, params.route);
+        const dataset = await fetchDatasetByRoute(
+          $fsxaApi,
+          params.route,
+          getRemoteDatasetProjectId,
+          getRemoteDatasetPageRefMapping,
+        );
         if (dataset) {
           console.debug(
             `Storing dataset ${dataset.id} for route ${params.route}.`,
@@ -187,4 +194,25 @@ export function displayHiddenSections(vue: Vue): boolean {
   // Assuming that pattern lib is used in Nuxt environment where $config is available.
   if (!(vue as any).$config) return true;
   return (vue as any).$config.FSXA_DISPLAY_HIDDEN_SECTIONS !== false;
+}
+
+export function getRemoteDatasetPageRefMapping(
+  vue: Vue | undefined,
+): Record<string, string> | undefined {
+  // Assuming that pattern lib is used in Nuxt environment where $config is available.
+  const mapping =
+    (vue as any)?.$config?.FSXA_REMOTE_DATASET_PAGEREF_MAPPING || undefined;
+
+  console.log("getRemoteDatasetPageRefMapping", mapping);
+  return mapping;
+}
+
+export function getRemoteDatasetProjectId(
+  vue: Vue | undefined,
+): string | undefined {
+  // Assuming that pattern lib is used in Nuxt environment where $config is available.
+  const remoteProjectId =
+    (vue as any)?.$config?.FSXA_REMOTE_DATASET_PROJECT_ID || undefined;
+  console.log("getRemoteDatasetProjectId", remoteProjectId);
+  return remoteProjectId;
 }

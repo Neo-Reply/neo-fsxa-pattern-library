@@ -16,6 +16,8 @@ import {
   setNavigation,
   triggerRouteChange,
   isExactDatasetRoutingEnabled,
+  getRemoteDatasetProjectId,
+  getRemoteDatasetPageRefMapping,
 } from "@/utils/getters";
 import { RequestRouteChangeParams } from "@/types/components";
 import {
@@ -80,6 +82,8 @@ class BaseComponent<
         this.locale,
         this.$store.getters[FSXAGetters.getGlobalSettingsKey],
         isExactDatasetRoutingEnabled(this),
+        getRemoteDatasetProjectId(this),
+        getRemoteDatasetPageRefMapping(this),
       ),
     );
   }

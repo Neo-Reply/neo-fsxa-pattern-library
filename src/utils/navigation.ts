@@ -53,8 +53,8 @@ function findExactMatchInRoutes(
 export const getNavigationNodeByPath = (
   useExactDatasetRouting: boolean,
   navigationData: NavigationData | null,
-  currentPath?: string,
-  currentDataset?: Dataset | null,
+  currentPath: string | undefined,
+  currentDataset: Dataset | null | undefined,
 ) => {
   if (!navigationData) return null;
   const path = decodeURIComponent(currentPath || "");
