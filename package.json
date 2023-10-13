@@ -66,7 +66,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^6.2.2",
-    "fsxa-api": "^10.16.0",
+    "fsxa-api": "^10.18.0",
     "husky": "^4.3.8",
     "lint-staged": "^9.5.0",
     "nock": "^13.2.2",
@@ -78,7 +78,7 @@
     "vue-template-compiler": "^2.6.14"
   },
   "peerDependencies": {
-    "fsxa-api": "^10.16.0"
+    "fsxa-api": "^10.18.0"
   },
   "commitlint": {
     "extends": [
