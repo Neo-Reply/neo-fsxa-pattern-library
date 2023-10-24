@@ -189,3 +189,10 @@ export function displayHiddenSections(vue: Vue): boolean {
   if (!(vue as any).$config) return true;
   return (vue as any).$config.FSXA_DISPLAY_HIDDEN_SECTIONS !== false;
 }
+
+export function getStoreTTL(vue: Vue): number {
+  // Assuming that pattern lib is used in Nuxt environment where $config is available.
+  if (!(vue as any).$config) return 300000;
+  const ttl = (vue as any).$config.FSXA_STORE_TTL;
+  return "number" === typeof ttl ? ttl : 300000;
+}
