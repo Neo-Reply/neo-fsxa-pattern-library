@@ -1,3 +1,10 @@
+# [9.2.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.1.0...v9.2.0) (2023-10-24)
+
+
+### Features
+
+* **storeTTL:** add configurable default store TTL ([f1b06ae](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/f1b06ae148b25beaca1e3020f0f1e39fd86312db))
+
 # [9.1.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.0.0...v9.1.0) (2023-10-13)
 
 
