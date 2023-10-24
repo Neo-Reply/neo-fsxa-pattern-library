@@ -1,3 +1,11 @@
+## [9.2.1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.2.0...v9.2.1) (2023-10-24)
+
+
+### Bug Fixes
+
+* **storeTLL:** remove prop from test ([#12](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/12)) ([f242462](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/f242462721174e5f052eeb8043b6ee20e0109dc8))
+* **storeTTL:** read storeTTL from nuxt config ([#11](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/11)) ([4175636](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/4175636877fab08d0c1656198f8301f8a6e098c1))
+
 # [9.2.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.1.0...v9.2.0) (2023-10-24)
 
 
