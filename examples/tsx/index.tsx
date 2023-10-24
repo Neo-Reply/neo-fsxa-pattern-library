@@ -42,7 +42,6 @@ class App extends TsxComponent<{}> {
         defaultLocale="de_DE"
         currentPath={this.route}
         devMode
-        storeTTL={300000}
         handleRouteChange={this.changeRoute}
         components={{
           appLayout: AppLayout,
