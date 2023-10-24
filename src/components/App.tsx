@@ -33,6 +33,7 @@ import { AppProps } from "@/types/components";
 import PortalProvider from "./internal/PortalProvider";
 import { importTPPSnapAPI } from "@/utils";
 import {
+  getStoreTTL,
   getStoredItem,
   isExactDatasetRoutingEnabled,
   triggerRouteChange,
@@ -46,7 +47,6 @@ class App extends TsxComponent<AppProps> {
   @Prop({ default: () => ({}) }) components!: AppProps["components"];
   @Prop() currentPath!: AppProps["currentPath"];
   @Prop({ default: false }) devMode!: AppProps["devMode"];
-  @Prop({ default: 300000 }) storeTTL!: AppProps["storeTTL"];
   @Prop({ required: true }) defaultLocale!: AppProps["defaultLocale"];
   @Prop({ required: true }) handleRouteChange!: AppProps["handleRouteChange"];
   @Prop() fsTppVersion: AppProps["fsTppVersion"];
@@ -56,7 +56,7 @@ class App extends TsxComponent<AppProps> {
   @ProvideReactive("currentPath") path = this.currentPath;
   @ProvideReactive(FSXA_INJECT_KEY_DEV_MODE) injectedDevMode = this.devMode;
 
-  @ProvideReactive(FSXA_STORE_TTL) injectedTTL = this.storeTTL;
+  @ProvideReactive(FSXA_STORE_TTL) injectedTTL = getStoreTTL(this);
 
   @ProvideReactive(FSXA_INJECT_KEY_CUSTOM_SNAP_HOOKS)
   injectedCustomSnapHooks = this.customSnapHooks;
