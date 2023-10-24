@@ -22,6 +22,7 @@ import {
   FSXA_INJECT_KEY_CUSTOM_SNAP_HOOKS,
   FSXA_INJECT_KEY_DEV_MODE,
   FSXA_INJECT_KEY_TPP_VERSION,
+  FSXA_STORE_TTL,
 } from "@/constants";
 import { getNavigationNodeByPath } from "@/utils/navigation";
 import { getTPPSnap } from "@/utils";
@@ -44,6 +45,8 @@ class BaseComponent<
   customSnapHooks!: boolean;
   @Inject({ from: FSXA_INJECT_KEY_DEV_MODE, default: false })
   isDevMode!: boolean;
+  @Inject({ from: FSXA_STORE_TTL, default: 300000 })
+  storeTTL!: number;
   @Inject({
     from: "requestRouteChange",
     default: () => (params: RequestRouteChangeParams) =>
@@ -196,7 +199,7 @@ class BaseComponent<
    *
    * Specify a ttl that will determine how long the value will be valid
    */
-  setStoredItem<Value = any>(key: string, value: Value, ttl = 300000) {
+  setStoredItem<Value = any>(key: string, value: Value, ttl = this.storeTTL) {
     return setStoredItem(this.$store, key, value, ttl);
   }
 

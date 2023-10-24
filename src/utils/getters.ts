@@ -16,7 +16,10 @@ export function getStoredItem<Value = any>(
 ): Value | undefined {
   const storedItem = $store.getters[FSXAGetters.item](key);
   const currentTime = new Date().getTime();
-  if (!storedItem || storedItem.fetchedAt + storedItem.ttl < currentTime)
+  if (
+    !storedItem ||
+    (storedItem.ttl >= 0 && storedItem.fetchedAt + storedItem.ttl < currentTime)
+  )
     return undefined;
   return storedItem.value;
 }
@@ -98,7 +101,6 @@ export async function triggerRouteChange(
             key: params.route,
             value: dataset,
             fetchedAt: new Date().getTime(),
-            ttl: 300000,
           });
         }
       }
@@ -156,7 +158,6 @@ export async function triggerRouteChange(
           $store.dispatch(FSXAActions.setStoredItem, {
             key: route,
             value: dataset,
-            ttl: 300000,
             fetchedAt: new Date().getTime(),
           });
         }
