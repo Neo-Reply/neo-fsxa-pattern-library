@@ -314,6 +314,12 @@ export interface AppProps {
    * DevMode to the rescue!
    */
   devMode?: boolean;
+
+  /**
+   * defines default time to live for StoreElements in Milliseconds. -1 => No TTL, always valid
+   */
+  storeTTL?: number;
+
   /**
    * Required callback that will be triggered, when the route should be changed
    *

@@ -10,3 +10,4 @@ export const FSXA_INJECT_KEY_CUSTOM_SNAP_HOOKS = "fsxa.customSnapHooks";
 export const FSXA_INJECT_DEV_MODE_INFO = "fsxa.devModeInfo";
 export const FSXA_INJECT_USE_ERROR_BOUNDARY_WRAPPER =
   "fsxa.useErrorBoundaryWrapper";
+export const FSXA_STORE_TTL = "fsxa.storeTTL";
