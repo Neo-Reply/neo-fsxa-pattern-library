@@ -11,7 +11,7 @@ import {
 } from "fsxa-api";
 
 import { FSXAVuexState, RootState } from "../";
-import { applyPageRefMappingToRemoteDataset } from "@/utils/misc";
+import { applyPageRefMappingToRemoteDataset } from "../../utils/misc";
 
 function createDatasetRouteFilters(route: string): QueryBuilderQuery[] {
   return [
@@ -77,6 +77,7 @@ export async function fetchDatasetByRoute(
 
     const remoteDataset = remoteItems[0] as Dataset;
     applyPageRefMappingToRemoteDataset(remoteDataset, pageRefMapping);
+
     remoteDataset &&
       console.log(
         "fetchDatasetByRoute, remote Dataset fetched ",
