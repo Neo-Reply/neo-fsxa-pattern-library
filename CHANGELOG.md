@@ -1,3 +1,10 @@
+# [9.3.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.2.1...v9.3.0) (2023-11-03)
+
+
+### Features
+
+* **remote-datasets:** Add support for remote Datasets from Remote Project ([#13](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/13)) ([c2db24a](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/c2db24a8ebf59d22493fd77b89b6f8a74307b03a))
+
 ## [9.2.1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.2.0...v9.2.1) (2023-10-24)
 
 
