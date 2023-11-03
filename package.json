@@ -26,6 +26,7 @@
     "src/types",
     "src/constants.ts",
     "src/store",
+    "src/utils/misc.ts",
     "README.md"
   ],
   "dependencies": {

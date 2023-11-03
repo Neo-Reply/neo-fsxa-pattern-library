@@ -33,12 +33,15 @@ import { AppProps } from "@/types/components";
 import PortalProvider from "./internal/PortalProvider";
 import { importTPPSnapAPI } from "@/utils";
 import {
+  getRemoteDatasetPageRefMapping,
+  getRemoteDatasetProjectId,
   getStoreTTL,
   getStoredItem,
   isExactDatasetRoutingEnabled,
   triggerRouteChange,
 } from "@/utils/getters";
 import { registerTppHooks } from "@/utils/tpp-snap-hooks";
+import { InitializeAppPayload } from "@/store/actions/initializeApp";
 
 @Component({
   name: "FSXAApp",
@@ -145,11 +148,14 @@ class App extends TsxComponent<AppProps> {
   }
 
   initialize(locale?: string, path?: string) {
-    return this.$store.dispatch(FSXAActions.initializeApp, {
+    const payload: InitializeAppPayload = {
       locale: locale ? locale : this.defaultLocale,
       initialPath: path ? path : this.currentPath,
       useExactDatasetRouting: isExactDatasetRoutingEnabled(this),
-    });
+      remoteDatasetProjectId: getRemoteDatasetProjectId(this),
+      remoteDatasetPageRefMapping: getRemoteDatasetPageRefMapping(this),
+    };
+    return this.$store.dispatch(FSXAActions.initializeApp, payload);
   }
 
   async requestRouteChangeByPageId(pageId: string, locale?: string) {
@@ -163,6 +169,9 @@ class App extends TsxComponent<AppProps> {
         { pageId, locale: locale ?? this.$store.getters[FSXAGetters.locale] },
         this.$store.getters[FSXAGetters.locale],
         this.$store.getters[FSXAGetters.getGlobalSettingsKey],
+        isExactDatasetRoutingEnabled(this),
+        getRemoteDatasetProjectId(this),
+        getRemoteDatasetPageRefMapping(this),
       );
 
       // if no route found, lookup from api

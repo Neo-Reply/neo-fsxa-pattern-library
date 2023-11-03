@@ -11,6 +11,7 @@ import {
 } from "fsxa-api";
 
 import { FSXAVuexState, RootState } from "../";
+import { applyPageRefMappingToRemoteDataset } from "../../utils/misc";
 
 function createDatasetRouteFilters(route: string): QueryBuilderQuery[] {
   return [
@@ -57,17 +58,38 @@ async function fetchNavigationOrNull(
   }
 }
 
-export async function fetchDatasetByRoute(fsxaApi: FSXAApi, route: string) {
+export async function fetchDatasetByRoute(
+  fsxaApi: FSXAApi,
+  route: string,
+  remoteProjectId: string | undefined,
+  pageRefMapping: Record<string, string> | undefined,
+): Promise<Dataset | undefined> {
   const { items } = await fsxaApi.fetchByFilter({
     filters: createDatasetRouteFilters(route),
   });
-  return items[0] as Dataset;
+  const localDataset = items[0];
+
+  if (!localDataset && remoteProjectId) {
+    const { items: remoteItems } = await fsxaApi.fetchByFilter({
+      filters: createDatasetRouteFilters(route),
+      remoteProject: remoteProjectId,
+    });
+
+    const remoteDataset = remoteItems[0] as Dataset;
+    applyPageRefMappingToRemoteDataset(remoteDataset, pageRefMapping);
+
+    return remoteDataset as Dataset | undefined;
+  }
+
+  return localDataset as Dataset | undefined;
 }
 
 export interface InitializeAppPayload {
   locale: string;
   initialPath?: string;
   useExactDatasetRouting?: boolean;
+  remoteDatasetProjectId?: string;
+  remoteDatasetPageRefMapping?: Record<string, string>;
 }
 export const createAppInitialization = (fsxaApi: FSXAApi) => async (
   { commit }: ActionContext<FSXAVuexState, RootState>,
@@ -82,7 +104,12 @@ export const createAppInitialization = (fsxaApi: FSXAApi) => async (
   async function fetchExactDatasetRouting(): Promise<NavigationData | null> {
     let navigationData = null;
     if (payload.useExactDatasetRouting) {
-      const dataset = await fetchDatasetByRoute(fsxaApi, route);
+      const dataset = await fetchDatasetByRoute(
+        fsxaApi,
+        route,
+        payload.remoteDatasetProjectId,
+        payload.remoteDatasetPageRefMapping,
+      );
       if (dataset) {
         console.debug(`Storing dataset ${dataset.id} for route ${route}.`);
         commit("setStoredItem", {

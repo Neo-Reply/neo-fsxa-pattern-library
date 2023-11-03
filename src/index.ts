@@ -17,4 +17,5 @@ export { default as FSXARichText } from "./components/RichText";
 export { default as FSXAInEdit } from "./components/InEdit";
 export { default as FSXAPage } from "./components/Page";
 export { default as FSXARenderContentElement } from "./components/RenderContentElement";
+export { applyPageRefMappingToRemoteDataset } from "./utils/misc";
 export { getFSXAModule, FSXAActions, FSXAGetters } from "./store";
