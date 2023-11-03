@@ -78,10 +78,6 @@ describe("triggerRouteChange", () => {
       fsxaApi,
       params,
       currentLocale,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
     );
     expect(targetRoute).toEqual(targetDataset.routes[1].route);
   });
