@@ -123,7 +123,6 @@ export const createAppInitialization = (fsxaApi: FSXAApi) => async (
           key: payload.initialPath,
           value: dataset,
           fetchedAt: new Date().getTime(),
-          ttl: 300000,
         });
         navigationData = await fetchNavigationOrNull(fsxaApi, {
           locale: dataset.locale,

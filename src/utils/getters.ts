@@ -16,7 +16,10 @@ export function getStoredItem<Value = any>(
 ): Value | undefined {
   const storedItem = $store.getters[FSXAGetters.item](key);
   const currentTime = new Date().getTime();
-  if (!storedItem || storedItem.fetchedAt + storedItem.ttl < currentTime)
+  if (
+    !storedItem ||
+    (storedItem.ttl >= 0 && storedItem.fetchedAt + storedItem.ttl < currentTime)
+  )
     return undefined;
   return storedItem.value;
 }
@@ -105,7 +108,6 @@ export async function triggerRouteChange(
             key: params.route,
             value: dataset,
             fetchedAt: new Date().getTime(),
-            ttl: 300000,
           });
         }
       }
@@ -163,7 +165,6 @@ export async function triggerRouteChange(
           $store.dispatch(FSXAActions.setStoredItem, {
             key: route,
             value: dataset,
-            ttl: 300000,
             fetchedAt: new Date().getTime(),
           });
         }
@@ -215,4 +216,11 @@ export function getRemoteDatasetProjectId(
     (vue as any)?.$config?.FSXA_REMOTE_DATASET_PROJECT_ID || undefined;
   console.log("getRemoteDatasetProjectId", remoteProjectId);
   return remoteProjectId;
+}
+
+export function getStoreTTL(vue: Vue): number {
+  // Assuming that pattern lib is used in Nuxt environment where $config is available.
+  if (!(vue as any).$config) return 300000;
+  const storeTTL = (vue as any).$config.FSXA_STORE_TTL;
+  return "number" === typeof storeTTL ? storeTTL : 300000;
 }

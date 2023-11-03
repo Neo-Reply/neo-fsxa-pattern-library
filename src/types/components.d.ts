@@ -314,6 +314,7 @@ export interface AppProps {
    * DevMode to the rescue!
    */
   devMode?: boolean;
+
   /**
    * Required callback that will be triggered, when the route should be changed
    *
