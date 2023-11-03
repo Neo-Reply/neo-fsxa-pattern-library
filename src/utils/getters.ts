@@ -204,7 +204,6 @@ export function getRemoteDatasetPageRefMapping(
   const mapping =
     (vue as any)?.$config?.FSXA_REMOTE_DATASET_PAGEREF_MAPPING || undefined;
 
-  console.log("getRemoteDatasetPageRefMapping", mapping);
   return mapping;
 }
 
@@ -214,7 +213,6 @@ export function getRemoteDatasetProjectId(
   // Assuming that pattern lib is used in Nuxt environment where $config is available.
   const remoteProjectId =
     (vue as any)?.$config?.FSXA_REMOTE_DATASET_PROJECT_ID || undefined;
-  console.log("getRemoteDatasetProjectId", remoteProjectId);
   return remoteProjectId;
 }
 

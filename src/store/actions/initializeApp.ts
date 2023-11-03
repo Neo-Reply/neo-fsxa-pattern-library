@@ -78,13 +78,6 @@ export async function fetchDatasetByRoute(
     const remoteDataset = remoteItems[0] as Dataset;
     applyPageRefMappingToRemoteDataset(remoteDataset, pageRefMapping);
 
-    remoteDataset &&
-      console.log(
-        "fetchDatasetByRoute, remote Dataset fetched ",
-        remoteDataset.id,
-        remoteDataset.routes,
-      );
-
     return remoteDataset as Dataset | undefined;
   }
 
