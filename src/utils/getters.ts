@@ -81,10 +81,10 @@ export async function triggerRouteChange(
   $fsxaApi: FSXAApi,
   params: TriggerRouteChangeParams,
   currentLocale: string,
-  globalSettingsKey: string | undefined,
-  useExactDatasetRouting: boolean | undefined,
-  getRemoteDatasetProjectId: string | undefined,
-  getRemoteDatasetPageRefMapping: Record<string, string> | undefined,
+  globalSettingsKey?: string,
+  useExactDatasetRouting?: boolean,
+  getRemoteDatasetProjectId?: string,
+  getRemoteDatasetPageRefMapping?: Record<string, string>,
 ): Promise<string | null> {
   console.debug("triggerRouteChange", { currentLocale, params });
   const navigationData: NavigationData =
