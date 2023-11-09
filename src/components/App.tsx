@@ -149,7 +149,8 @@ class App extends TsxComponent<AppProps> {
 
   initialize(locale?: string, path?: string) {
     const payload: InitializeAppPayload = {
-      locale: locale ? locale : this.defaultLocale,
+      locale:
+        locale || (this as any).$config?.FSXA_LOCALE || this.defaultLocale,
       initialPath: path ? path : this.currentPath,
       useExactDatasetRouting: isExactDatasetRoutingEnabled(this),
       remoteDatasetProjectId: getRemoteDatasetProjectId(this),
