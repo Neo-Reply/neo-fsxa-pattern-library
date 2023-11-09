@@ -1,3 +1,10 @@
+# [9.4.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.3.0...v9.4.0) (2023-11-09)
+
+
+### Features
+
+* **defaultlocale:** use FSXA_LOCALE from runtimeConfig for defaultLocale if available ([#14](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/14)) ([94397cc](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/94397cc3c3bafdbb775dfddc3df7dcc6b2485724))
+
 # [9.3.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.2.1...v9.3.0) (2023-11-03)
 
 
