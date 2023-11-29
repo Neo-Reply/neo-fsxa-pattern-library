@@ -38,6 +38,7 @@ import {
   getStoreTTL,
   getStoredItem,
   isExactDatasetRoutingEnabled,
+  isExactDatasetRoutingFallbackEnabled,
   triggerRouteChange,
 } from "@/utils/getters";
 import { registerTppHooks } from "@/utils/tpp-snap-hooks";
@@ -252,6 +253,7 @@ class App extends TsxComponent<AppProps> {
     try {
       const currentNode = getNavigationNodeByPath(
         isExactDatasetRoutingEnabled(this),
+        isExactDatasetRoutingFallbackEnabled(this),
         this.navigationData,
         this.currentPath,
         this.currentPath ? getStoredItem(this.$store, this.currentPath) : null,

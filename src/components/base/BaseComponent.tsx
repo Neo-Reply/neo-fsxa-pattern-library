@@ -18,6 +18,7 @@ import {
   isExactDatasetRoutingEnabled,
   getRemoteDatasetProjectId,
   getRemoteDatasetPageRefMapping,
+  isExactDatasetRoutingFallbackEnabled,
 } from "@/utils/getters";
 import { RequestRouteChangeParams } from "@/types/components";
 import {
@@ -116,6 +117,7 @@ class BaseComponent<
     try {
       return getNavigationNodeByPath(
         isExactDatasetRoutingEnabled(this),
+        isExactDatasetRoutingFallbackEnabled(this),
         this.navigationData,
         this.currentPath,
         this.currentDataset,

@@ -52,6 +52,7 @@ function findExactMatchInRoutes(
 
 export const getNavigationNodeByPath = (
   useExactDatasetRouting: boolean,
+  useExactDatasetRoutingFallback: boolean,
   navigationData: NavigationData | null,
   currentPath?: string,
   currentDataset?: Dataset | null,
@@ -80,7 +81,7 @@ export const getNavigationNodeByPath = (
     const node = findExactMatchInSeoRouteMap(path, navigationData);
     if (node) return node;
 
-    if (!useExactDatasetRouting) {
+    if (!useExactDatasetRouting || useExactDatasetRoutingFallback) {
       const contentProjectionNode = findMatchWithSeoRouteRegex(
         path,
         navigationData,

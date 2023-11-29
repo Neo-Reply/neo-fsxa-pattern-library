@@ -191,6 +191,15 @@ export function isExactDatasetRoutingEnabled(vue: Vue): boolean {
   return (vue as any).$config.FSXA_USE_EXACT_DATASET_ROUTING === true || false;
 }
 
+export function isExactDatasetRoutingFallbackEnabled(vue: Vue): boolean {
+  // Assuming that pattern lib is used in Nuxt environment where $config is available.
+  if (!(vue as any).$config) return false;
+  return (
+    (vue as any).$config.FSXA_USE_EXACT_DATASET_ROUTING_FALLBACK === true ||
+    false
+  );
+}
+
 export function displayHiddenSections(vue: Vue): boolean {
   // Assuming that pattern lib is used in Nuxt environment where $config is available.
   if (!(vue as any).$config) return true;
