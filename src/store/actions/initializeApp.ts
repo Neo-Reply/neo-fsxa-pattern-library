@@ -13,8 +13,11 @@ import {
 import { FSXAVuexState, RootState } from "../";
 import { applyPageRefMappingToRemoteDataset } from "../../utils/misc";
 
-function createDatasetRouteFilters(route: string): QueryBuilderQuery[] {
-  return [
+function createDatasetRouteFilters(
+  route: string,
+  validLanguages: string[] | undefined,
+): QueryBuilderQuery[] {
+  const filters: QueryBuilderQuery[] = [
     {
       operator: LogicalQueryOperatorEnum.OR,
       filters: [
@@ -36,6 +39,15 @@ function createDatasetRouteFilters(route: string): QueryBuilderQuery[] {
       field: "fsType",
     },
   ];
+  // If Valid Languages Are passed, apply language Filter
+  if (validLanguages?.length) {
+    filters.push({
+      operator: ComparisonQueryOperatorEnum.IN,
+      field: "locale.identifier",
+      value: validLanguages,
+    });
+  }
+  return filters;
 }
 
 function isNotFoundError(errorLike: unknown) {
@@ -63,15 +75,16 @@ export async function fetchDatasetByRoute(
   route: string,
   remoteProjectId: string | undefined,
   pageRefMapping: Record<string, string> | undefined,
+  validLanguages: string[] | undefined,
 ): Promise<Dataset | undefined> {
   const { items } = await fsxaApi.fetchByFilter({
-    filters: createDatasetRouteFilters(route),
+    filters: createDatasetRouteFilters(route, validLanguages),
   });
   const localDataset = items[0];
 
   if (!localDataset && remoteProjectId) {
     const { items: remoteItems } = await fsxaApi.fetchByFilter({
-      filters: createDatasetRouteFilters(route),
+      filters: createDatasetRouteFilters(route, validLanguages),
       remoteProject: remoteProjectId,
     });
 
@@ -90,6 +103,7 @@ export interface InitializeAppPayload {
   useExactDatasetRouting?: boolean;
   remoteDatasetProjectId?: string;
   remoteDatasetPageRefMapping?: Record<string, string>;
+  validLanguages?: string[];
 }
 export const createAppInitialization = (fsxaApi: FSXAApi) => async (
   { commit }: ActionContext<FSXAVuexState, RootState>,
@@ -109,6 +123,7 @@ export const createAppInitialization = (fsxaApi: FSXAApi) => async (
         route,
         payload.remoteDatasetProjectId,
         payload.remoteDatasetPageRefMapping,
+        payload.validLanguages,
       );
       if (dataset) {
         console.debug(`Storing dataset ${dataset.id} for route ${route}.`);

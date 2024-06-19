@@ -18,6 +18,7 @@ import {
   isExactDatasetRoutingEnabled,
   getRemoteDatasetProjectId,
   getRemoteDatasetPageRefMapping,
+  getValidLanguages,
 } from "@/utils/getters";
 import { RequestRouteChangeParams } from "@/types/components";
 import {
@@ -87,6 +88,7 @@ class BaseComponent<
         isExactDatasetRoutingEnabled(this),
         getRemoteDatasetProjectId(this),
         getRemoteDatasetPageRefMapping(this),
+        getValidLanguages(this),
       ),
     );
   }

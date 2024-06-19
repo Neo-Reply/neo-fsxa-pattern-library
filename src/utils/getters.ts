@@ -83,8 +83,9 @@ export async function triggerRouteChange(
   currentLocale: string,
   globalSettingsKey?: string,
   useExactDatasetRouting?: boolean,
-  getRemoteDatasetProjectId?: string,
-  getRemoteDatasetPageRefMapping?: Record<string, string>,
+  remoteDatasetProjectId?: string,
+  remoteDatasetPageRefMapping?: Record<string, string>,
+  validLanguages?: string[],
 ): Promise<string | null> {
   console.debug("triggerRouteChange", { currentLocale, params });
   const navigationData: NavigationData =
@@ -96,8 +97,9 @@ export async function triggerRouteChange(
         const dataset = await fetchDatasetByRoute(
           $fsxaApi,
           params.route,
-          getRemoteDatasetProjectId,
-          getRemoteDatasetPageRefMapping,
+          remoteDatasetProjectId,
+          remoteDatasetPageRefMapping,
+          validLanguages,
         );
         if (dataset) {
           console.debug(
@@ -205,6 +207,14 @@ export function getRemoteDatasetPageRefMapping(
     (vue as any)?.$config?.FSXA_REMOTE_DATASET_PAGEREF_MAPPING || undefined;
 
   return mapping;
+}
+
+export function getValidLanguages(vue: Vue | undefined): string[] | undefined {
+  // Assuming that pattern lib is used in Nuxt environment where $config is available.
+  const validLanguages =
+    (vue as any)?.$config?.FSXA_VALID_LANGUAGES || undefined;
+
+  return validLanguages;
 }
 
 export function getRemoteDatasetProjectId(

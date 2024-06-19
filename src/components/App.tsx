@@ -37,6 +37,7 @@ import {
   getRemoteDatasetProjectId,
   getStoreTTL,
   getStoredItem,
+  getValidLanguages,
   isExactDatasetRoutingEnabled,
   triggerRouteChange,
 } from "@/utils/getters";
@@ -155,6 +156,7 @@ class App extends TsxComponent<AppProps> {
       useExactDatasetRouting: isExactDatasetRoutingEnabled(this),
       remoteDatasetProjectId: getRemoteDatasetProjectId(this),
       remoteDatasetPageRefMapping: getRemoteDatasetPageRefMapping(this),
+      validLanguages: getValidLanguages(this),
     };
     return this.$store.dispatch(FSXAActions.initializeApp, payload);
   }
@@ -173,6 +175,7 @@ class App extends TsxComponent<AppProps> {
         isExactDatasetRoutingEnabled(this),
         getRemoteDatasetProjectId(this),
         getRemoteDatasetPageRefMapping(this),
+        getValidLanguages(this),
       );
 
       // if no route found, lookup from api

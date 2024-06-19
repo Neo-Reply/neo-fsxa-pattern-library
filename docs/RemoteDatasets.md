@@ -14,3 +14,9 @@ If this is set, the pattern lib will try to resolve routes from that projects Ca
 To make sure, that a valid PageRef can be used to display those Datasets, one may add a mapping to map REMOTE_PAGEREF_ID to LOCAL_PAGEREF_ID
 
 `FSXA_REMOTE_DATASET_PAGEREF_MAPPING={ "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}`
+
+Additionally, you may configure the variable `FSXA_VALID_LANGUAGES`, which will filter out Dataset Routing to the Languages set here. e.g.
+
+`FSXA_VALID_LANGUAGES=["DE_DE", "EN_US"]`
+
+Note that the values in this Array must coincide with the identifier of a Language in the CaaS found in each Document under "locale.identifier"
