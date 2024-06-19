@@ -1,3 +1,10 @@
+# [9.5.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.4.0...v9.5.0) (2024-06-19)
+
+
+### Features
+
+* **validlanguages:** filter Dataset routing for valid Languages ([7b0756e](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/7b0756e845daf03d50e60a849741f4c0e1b89330))
+
 # [9.4.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.3.0...v9.4.0) (2023-11-09)
 
 
