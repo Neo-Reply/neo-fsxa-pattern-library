@@ -1,3 +1,10 @@
+# [9.6.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.5.0...v9.6.0) (2024-06-21)
+
+
+### Features
+
+* **proxy-api for remote dataset routing:** use separate configurable … ([#15](https://github.com/Neo-Reply/neo-fsxa-pattern-library/issues/15)) ([a4311fe](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/a4311fec968705503aaf9fc3ad734a4ef83a1d75))
+
 # [9.5.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.4.0...v9.5.0) (2024-06-19)
 
 
