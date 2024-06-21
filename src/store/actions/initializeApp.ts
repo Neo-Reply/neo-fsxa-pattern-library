@@ -74,8 +74,8 @@ async function fetchNavigationOrNull(
 const baseUrl = (remoteProxyApiPath: string): string => {
   const host = (process as any).client
     ? window.location.origin
-    : `http://${process.env.NUXT_HOST}:${process.env.NUXT_PORT}` ||
-      "http://localhost:3000";
+    : `http://${process.env.NUXT_HOST || "localhost"}:${process.env.NUXT_PORT ||
+        "3000"}`;
 
   return `${host}${remoteProxyApiPath}`;
 };
