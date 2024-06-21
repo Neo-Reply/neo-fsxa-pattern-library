@@ -83,7 +83,7 @@ export async function triggerRouteChange(
   currentLocale: string,
   globalSettingsKey?: string,
   useExactDatasetRouting?: boolean,
-  remoteDatasetProjectId?: string,
+  remoteProxyApiPath?: string,
   remoteDatasetPageRefMapping?: Record<string, string>,
   validLanguages?: string[],
 ): Promise<string | null> {
@@ -97,7 +97,7 @@ export async function triggerRouteChange(
         const dataset = await fetchDatasetByRoute(
           $fsxaApi,
           params.route,
-          remoteDatasetProjectId,
+          remoteProxyApiPath,
           remoteDatasetPageRefMapping,
           validLanguages,
         );
@@ -217,13 +217,13 @@ export function getValidLanguages(vue: Vue | undefined): string[] | undefined {
   return validLanguages;
 }
 
-export function getRemoteDatasetProjectId(
+export function getRemoteDatasetProxyApiPath(
   vue: Vue | undefined,
 ): string | undefined {
   // Assuming that pattern lib is used in Nuxt environment where $config is available.
-  const remoteProjectId =
-    (vue as any)?.$config?.FSXA_REMOTE_DATASET_PROJECT_ID || undefined;
-  return remoteProjectId;
+  const remoteDatasetProxyApiPath =
+    (vue as any)?.$config?.FSXA_REMOTE_DATASET_PROXY_API_PATH || undefined;
+  return remoteDatasetProxyApiPath;
 }
 
 export function getStoreTTL(vue: Vue): number {
