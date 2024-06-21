@@ -34,7 +34,7 @@ import PortalProvider from "./internal/PortalProvider";
 import { importTPPSnapAPI } from "@/utils";
 import {
   getRemoteDatasetPageRefMapping,
-  getRemoteDatasetProjectId,
+  getRemoteDatasetProxyApiPath,
   getStoreTTL,
   getStoredItem,
   getValidLanguages,
@@ -154,7 +154,7 @@ class App extends TsxComponent<AppProps> {
         locale || (this as any).$config?.FSXA_LOCALE || this.defaultLocale,
       initialPath: path ? path : this.currentPath,
       useExactDatasetRouting: isExactDatasetRoutingEnabled(this),
-      remoteDatasetProjectId: getRemoteDatasetProjectId(this),
+      remoteDatasetProxyApiPath: getRemoteDatasetProxyApiPath(this),
       remoteDatasetPageRefMapping: getRemoteDatasetPageRefMapping(this),
       validLanguages: getValidLanguages(this),
     };
@@ -173,7 +173,7 @@ class App extends TsxComponent<AppProps> {
         this.$store.getters[FSXAGetters.locale],
         this.$store.getters[FSXAGetters.getGlobalSettingsKey],
         isExactDatasetRoutingEnabled(this),
-        getRemoteDatasetProjectId(this),
+        getRemoteDatasetProxyApiPath(this),
         getRemoteDatasetPageRefMapping(this),
         getValidLanguages(this),
       );

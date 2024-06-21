@@ -5,6 +5,7 @@ import {
   FetchNavigationParams,
   FSXAApi,
   FSXAApiErrors,
+  FSXAProxyApi,
   LogicalQueryOperatorEnum,
   NavigationData,
   QueryBuilderQuery,
@@ -70,10 +71,19 @@ async function fetchNavigationOrNull(
   }
 }
 
+const baseUrl = (remoteProxyApiPath: string): string => {
+  const host = (process as any).client
+    ? window.location.origin
+    : `http://${process.env.NUXT_HOST || "localhost"}:${process.env.NUXT_PORT ||
+        "3000"}`;
+
+  return `${host}${remoteProxyApiPath}`;
+};
+
 export async function fetchDatasetByRoute(
   fsxaApi: FSXAApi,
   route: string,
-  remoteProjectId: string | undefined,
+  remoteProxyApiPath: string | undefined,
   pageRefMapping: Record<string, string> | undefined,
   validLanguages: string[] | undefined,
 ): Promise<Dataset | undefined> {
@@ -82,10 +92,11 @@ export async function fetchDatasetByRoute(
   });
   const localDataset = items[0];
 
-  if (!localDataset && remoteProjectId) {
-    const { items: remoteItems } = await fsxaApi.fetchByFilter({
+  if (!localDataset && remoteProxyApiPath) {
+    const { items: remoteItems } = await new FSXAProxyApi(
+      baseUrl(remoteProxyApiPath),
+    ).fetchByFilter({
       filters: createDatasetRouteFilters(route, validLanguages),
-      remoteProject: remoteProjectId,
     });
 
     const remoteDataset = remoteItems[0] as Dataset;
@@ -101,7 +112,7 @@ export interface InitializeAppPayload {
   locale: string;
   initialPath?: string;
   useExactDatasetRouting?: boolean;
-  remoteDatasetProjectId?: string;
+  remoteDatasetProxyApiPath?: string;
   remoteDatasetPageRefMapping?: Record<string, string>;
   validLanguages?: string[];
 }
@@ -121,7 +132,7 @@ export const createAppInitialization = (fsxaApi: FSXAApi) => async (
       const dataset = await fetchDatasetByRoute(
         fsxaApi,
         route,
-        payload.remoteDatasetProjectId,
+        payload.remoteDatasetProxyApiPath,
         payload.remoteDatasetPageRefMapping,
         payload.validLanguages,
       );

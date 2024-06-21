@@ -66,7 +66,7 @@ describe("App", () => {
       locale: "de",
       initialPath: "/some/path",
       useExactDatasetRouting: false,
-      remoteDatasetProjectId: undefined,
+      remoteDatasetProxyApiPath: undefined,
       remoteDatasetPageRefMapping: undefined,
     };
 
