@@ -13,7 +13,7 @@ import {
 
 import { FSXAVuexState, RootState } from "../";
 import { applyPageRefMappingToRemoteDataset } from "../../utils/misc";
-import { isClient } from "@/utils";
+import { isClient } from "../../utils";
 
 function createDatasetRouteFilters(
   route: string,
