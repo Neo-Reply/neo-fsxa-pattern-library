@@ -1,3 +1,10 @@
+## [9.6.1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.6.0...v9.6.1) (2024-06-24)
+
+
+### Bug Fixes
+
+* **client check routing:** client check routing ([a9bbb22](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/a9bbb22189935119d7af8b8cda64aea087fe4f4d))
+
 # [9.6.0](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.5.0...v9.6.0) (2024-06-21)
 
 
