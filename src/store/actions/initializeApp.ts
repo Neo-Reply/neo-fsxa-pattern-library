@@ -13,6 +13,7 @@ import {
 
 import { FSXAVuexState, RootState } from "../";
 import { applyPageRefMappingToRemoteDataset } from "../../utils/misc";
+import { isClient } from "@/utils";
 
 function createDatasetRouteFilters(
   route: string,
@@ -72,7 +73,7 @@ async function fetchNavigationOrNull(
 }
 
 const baseUrl = (remoteProxyApiPath: string): string => {
-  const host = (process as any).client
+  const host = isClient()
     ? window.location.origin
     : `http://${process.env.NUXT_HOST || "localhost"}:${process.env.NUXT_PORT ||
         "3000"}`;
