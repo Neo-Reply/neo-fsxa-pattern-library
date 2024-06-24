@@ -1,3 +1,10 @@
+## [9.6.3](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.6.2...v9.6.3) (2024-06-24)
+
+
+### Bug Fixes
+
+* **removed import:** util import breaks apps ([e65a6b1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/e65a6b10d072fa08f5be9b6d37654cbca3cca571))
+
 ## [9.6.2](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.6.1...v9.6.2) (2024-06-24)
 
 
