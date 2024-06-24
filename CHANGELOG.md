@@ -1,3 +1,10 @@
+## [9.6.2](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.6.1...v9.6.2) (2024-06-24)
+
+
+### Bug Fixes
+
+* **util import:** use .. instead of @ ([f42eb91](https://github.com/Neo-Reply/neo-fsxa-pattern-library/commit/f42eb9110db7ffb3959f3846f550afc1d7547c63))
+
 ## [9.6.1](https://github.com/Neo-Reply/neo-fsxa-pattern-library/compare/v9.6.0...v9.6.1) (2024-06-24)
 
 
